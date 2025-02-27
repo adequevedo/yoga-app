@@ -1,0 +1,14 @@
+{
+    "chains": [
+        {
+            "name": "all",
+            "settings": {
+                "llm": {
+                    "model_name": "gemini-2.0-flash",
+                    "temperature": 0.5,
+                    "max_output_tokens": 8192
+                }
+            }
+        }
+    ]
+}
