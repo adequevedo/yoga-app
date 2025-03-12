@@ -1,22 +1,31 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18-alpine
+FROM node:18-alpine AS build 
 
-# Set the working directory to /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the container
+# ENV BACKEND_URL=${BACKEND_URL}
+
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# RUN npm run build
+RUN npm i -g serve
 
 # Copy the rest of the application code to the container
 COPY . .
 
-# Expose port 5173
-EXPOSE 5173
+RUN npm run build
 
-# Define the command to run your app using npm start
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
+ENV PORT 5173
+
+EXPOSE $PORT
+
+
+
+FROM nginx:alpine 
+
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 5173/tcp
+
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

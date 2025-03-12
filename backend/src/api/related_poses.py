@@ -39,8 +39,6 @@ def get_image_urls(query: str) -> List[str]:
         response.raise_for_status()  
         
         search_results = response.json()
-        logger.debug("Response from search engine: ")
-        logger.debug(search_results)
         return search_results["items"][0]["link"]
         
 

@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+// const BACKEND_URL = import.meta.env.BACKEND_URL || "http://localhost:8085";
+const BACKEND_URL = "https://yoga-app-backend-746688919465.us-east1.run.app"
+// const BACKEND_URL = "http://localhost:8085"
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -33,7 +36,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:8085/api/identify-pose/",
+        `${BACKEND_URL}/api/identify-pose/`,
         {
           method: "POST",
           body: formData,
@@ -60,7 +63,7 @@ function App() {
       if (prediction && prediction.related_poses && prediction.related_poses.length > 0) {
         try {
           const response = await fetch(
-            "http://localhost:8085/api/pose-images/",
+            `${BACKEND_URL}/api/pose-images/`,
             {
               method: "POST",
               headers: {

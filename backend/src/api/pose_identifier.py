@@ -41,6 +41,9 @@ async def identify_pose(file: UploadFile = File(...)):
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
             
+        logger.debug("File Path: ")
+        logger.debug(file_path)
+            
         image = PIL.Image.open(file_path)
                 
         client = genai.Client(api_key=GEMINI_API_KEY)
